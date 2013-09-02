@@ -1,3 +1,21 @@
+require 'bcrypt'
+
 class User < ActiveRecord::Base
-  attr_accessible :email, :password_digest, :session_token
+  attr_accessible :email, :password, :session_token
+
+  def password=(plaintext_password)
+    self.password_digest = BCrypt::Password.create(plaintext_password)
+  end
+  
+  def set_session_token
+    self.session_token = SecureRandom.urlsafe_base64
+  end
+
+  def self.verify_credentials(email, password)
+    user = User.find_by_email(email)
+    db_password = BCrypt::Password.new(user.password_digest)
+    
+    user && db_password == password
+  end
+
 end
