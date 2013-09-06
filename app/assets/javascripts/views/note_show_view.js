@@ -8,8 +8,8 @@ Evernote.Views.NoteShowView = Backbone.View.extend({
     "click button.deleteTagging": "deleteTagging",
     "click a.addTagging": "addTagging",
     "click input.newTagNameInput": "inputTagName",
-    "click button.createTag": "createTag"
-    
+    "click button.createTag": "createTag",
+    "keyup .edit_note_content": "autoSave"    
   },
   
   render: function (){
@@ -26,15 +26,30 @@ Evernote.Views.NoteShowView = Backbone.View.extend({
     $("div.content").html(addNoteView.render().$el)
   },
   
-  submitEditNote: function(event){
+  
+  
+  autoSave: _.debounce(function(event){
     event.preventDefault();
     var attributes = $(".edit_note_form").serializeJSON().note;
     var that = this
     Evernote.current_note.save(attributes, {success: function() {
-
-      that.trigger("noteUpdated");
-    }});
-  },
+      
+      Evernote.container.render();
+      
+    }});  
+  }, 250),
+  
+  
+  // autoSave: function(event){
+  //   debugger
+  //   event.preventDefault();
+  //   var attributes = $(".edit_note_form").serializeJSON().note;
+  //   var that = this
+  //   Evernote.current_note.save(attributes, {success: function() {
+  // 
+  //     that.trigger("noteUpdated");
+  //   }});
+  // },
   
   inputTagName: function(event){
     event.stopPropagation();
