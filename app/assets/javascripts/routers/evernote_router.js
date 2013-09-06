@@ -16,8 +16,9 @@ Evernote.Routers.EvernoteRouter = Backbone.Router.extend({
         });
       },
       error: function(){
+        Evernote.container = new Evernote.Views.ContainerView();
         $(".container").html(Evernote.container.render().$el);
-      } 
+      }
     });
   }
 });
