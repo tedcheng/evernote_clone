@@ -34,14 +34,14 @@ Evernote.Views.NoteShowView = Backbone.View.extend({
     var that = this
     Evernote.current_note.save(attributes, {success: function() {
       
-      Evernote.container.render();
+      // Evernote.container.render();
       
     }});  
   }, 250),
   
   
   // autoSave: function(event){
-  //   debugger
+  //   tagging
   //   event.preventDefault();
   //   var attributes = $(".edit_note_form").serializeJSON().note;
   //   var that = this
@@ -61,7 +61,7 @@ Evernote.Views.NoteShowView = Backbone.View.extend({
     var attributes = $(".create_tag_form").serializeJSON().tag;
     var new_tag = new Evernote.Models.Tag(attributes);
     Evernote.tags.create(new_tag, { success: function() {
-      debugger
+      
       Evernote.container.render();
     }});
     

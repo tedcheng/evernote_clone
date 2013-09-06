@@ -1,7 +1,7 @@
 <% if (tags) { %>
   <% tags.forEach(function(tag){ %>
     <button type="button" class="deleteTagging btn btn-default btn-xs" data-id="<%= tag.id %>">
-      <span><%= tag.name %><span>
+      <span><%= tag.name %> <span class="glyphicon glyphicon-remove"></span><span>
     </button>
   
   
