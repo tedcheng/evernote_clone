@@ -14,7 +14,10 @@ Evernote.Routers.EvernoteRouter = Backbone.Router.extend({
             $(".container").html(Evernote.container.render().$el);                      
           }
         });
-      }
+      },
+      error: function(){
+        $(".container").html(Evernote.container.render().$el);
+      } 
     });
   }
 });

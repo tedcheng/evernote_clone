@@ -11,7 +11,11 @@ class NotebooksController < ApplicationController
   
   def index
     @notebooks = Notebook.find_all_by_user_id(current_user.id)
-    render "index.json.rabl"
+    if @notebooks
+      render "index.json.rabl"
+    else
+      render :json => @notebooks.errors.full_messages, :status => 422
+    end
   end
 
   def destroy
