@@ -1,4 +1,4 @@
-<% if (note){ %>
+<% if ( !!note.get("tags") || !!note.get("title") ){ %>
   <div>Notebook: <%= note.notebook_title() %></div>
   <div>Tags: <%= Evernote.container.noteShowView.makeTags({tags: note.get("tags")}) %></div>
   
