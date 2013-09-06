@@ -12,5 +12,7 @@ Evernote::Application.routes.draw do
   resources :notebooks, :except => [:new, :edit]
   resources :notes, :except => [:new, :edit]
   resources :tags, :except => [:new, :edit]
+  resources :taggings, :only => [:create]
+  delete '/taggings', to: 'taggings#destroy'
   root :to => "root#root"
 end

@@ -16,7 +16,10 @@ Evernote.Views.NotebooksIndexView = Backbone.View.extend({
     "click .notebooks .tag": "changeTag",
     "click .notebooks button.deleteNotebook": "deleteNotebook",
     "click .notebooks button.editNotebook": "showEditNotebook",
-    "click button.addNotebookSubmit": "addNotebookSubmit"
+    "click button.addNotebookSubmit": "addNotebookSubmit",
+    "click button.deleteTag": "deleteTag"
+    
+    
     
   },
   
@@ -28,6 +31,19 @@ Evernote.Views.NotebooksIndexView = Backbone.View.extend({
     this.$el.html(content);
     return this;
   },
+  
+  deleteTag: function(event){
+    event.preventDefault();
+    var tag_id = parseInt($(event.currentTarget).attr("data-id"));
+    var tag = Evernote.tags.get(tag_id);
+    tag.destroy({
+      success: function(){
+        
+        Evernote.container.render();
+      }
+    });
+  },
+  
   
   changeNotebook: function(event){
     

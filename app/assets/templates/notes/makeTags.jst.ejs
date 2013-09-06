@@ -1,3 +1,41 @@
-<% tags.forEach(function(tag){ %>
-  <span><%= tag.name %> <span>
-<% }); %>
+<% if (tags) { %>
+  <% tags.forEach(function(tag){ %>
+    <button type="button" class="deleteTagging btn btn-default btn-xs" data-id="<%= tag.id %>">
+      <span><%= tag.name %><span>
+    </button>
+  
+  
+  <% }); %>
+<% } %>
+
+<div class="btn-group">
+  <button type="button" class="btn btn-default btn-xs dropdown-toggle" data-toggle="dropdown">
+    Add Tag <span class="caret"></span>
+  </button>
+  <ul class="dropdown-menu" role="menu">
+    
+    <% var tag_names = _.map(Evernote.current_note.get("tags"), function(tag){ return tag.name; }); %>
+    <% if (Evernote.tags) { %>
+      <% Evernote.tags.each(function(tag){ %>
+      
+        <% if (_.find(tag_names, function(tag_name){ return tag_name == tag.get("name") })) { return true; } %>
+        <li><a href="#" class="addTagging" data-id="<%= tag.id %>"><%= tag.get("name") %></a></li>
+      <% }); %>
+    <% }; %>
+  
+    
+    <li class="divider"></li>
+    <li>
+      <form class="create_tag_form form-inline create_tag_form" role="form">
+        <div class="form-group">
+          <div class="input-group input-group-xs">
+          <input type="text" class="newTagNameInput form-control input-sm" name="tag[name]" placeholder="untitled">
+          </div>
+        </div>
+        <button type="submit" class="createTag pull-right btn btn-default btn-xs">Create New Tag</button>
+      </form>
+      
+    
+    </li>
+  </ul>
+</div>
