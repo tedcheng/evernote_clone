@@ -1,0 +1,11 @@
+<form class="add_note_form" role="form">
+  <div class="form-group">
+    <label for="note_title">Title</label>
+    <input type="text" class="form-control" id="note_title" name="note[title]" value="<%= note.get("body") %>" placeholder="Untitled"%>
+    <input type="hidden" name="note[notebook_id]" value="<%= Evernote.current_notebook.id %>">
+    <label for="note_body">Body</label>
+    <textarea class="form-control" rows="10" name="note[body]"><%=note.get("body")%></textarea>
+
+  </div>
+  <button type="submit" class="add_note_submit btn btn-default">Submit</button>
+</form>

@@ -10,6 +10,23 @@
 // WARNING: THE FIRST BLANK LINE MARKS THE END OF WHAT'S TO BE PROCESSED, ANY BLANK LINE SHOULD
 // GO AFTER THE REQUIRES BELOW.
 //
+// Include all twitter's javascripts
+
+// Or peek any of them yourself
+
 //= require jquery
+//= require jquery.serializeJSON.min
 //= require jquery_ujs
+//= require underscore
+//= require twitter/bootstrap
+
+
+
+//= require backbone
+//= require evernote
+//= require_tree ../templates
+//= require_tree ./models
+//= require_tree ./collections
+//= require_tree ./views
+//= require_tree ./routers
 //= require_tree .

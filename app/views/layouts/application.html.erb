@@ -8,8 +8,10 @@
 </head>
 <body>
 	<% if current_user%>
-		<%= button_to "Logout", session_url, :method => "delete" %>
-	<% end %>
+		<span>Evernote</span>
+		
+		<span class=""><%= button_to "Logout", session_url, :method => "delete" %></span>
+		<% end %>
 <%= yield %>
 
 </body>

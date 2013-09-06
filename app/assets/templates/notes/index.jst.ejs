@@ -1,0 +1,42 @@
+<ul class="notes list-group">
+<li class="list-group-item">Notes</li>
+<% if (notes) { %>  
+  <% notes.each(function(note){ %>
+    <% if (note.id === Evernote.current_note.id) { %>
+
+      <li class="list-group-item">
+        <span class="note <%= note.id%> selected %>" data-id="<%= note.id%>"><span class="glyphicon glyphicon-list-alt"></span> <%= note.get("title") %></span>
+        <button type="button" class="pull-right deleteNote btn btn-default btn-xs" data-id="<%= note.id%>">
+          <span class="glyphicon glyphicon-trash"></span>
+        </button>
+      </li>
+
+
+    <% } else {%>
+
+      <li class="list-group-item">
+        <span class="note <%= note.id%> %>" data-id="<%= note.id%>"><span class="glyphicon glyphicon-list-alt"></span> <%= note.get("title") %></span>
+        <button type="button" class="pull-right deleteNote btn btn-default btn-xs" data-id="<%= note.id%>">
+          <span class="glyphicon glyphicon-trash"></span>
+        </button>
+      </li>
+
+
+    <% }; %>
+  <% }); %>
+<% }; %>
+
+<li class="list-group-item">
+  <form class="form-inline add_note_form" role="form">
+    <div class="form-group">
+      <input type="text" class="form-control input-sm" name="note[title]" placeholder="untitled">
+    </div>
+    <% if (!!Evernote.current_notebook.get("title")) { %>
+      <input type="hidden" name="note[notebook_id]" value="<%= Evernote.current_notebook.id %>">
+    <% } %>
+    <button type="submit" class="addNote pull-right btn btn-default btn-sm">Add New</button>
+  </form>
+</li>
+
+
+</ul>

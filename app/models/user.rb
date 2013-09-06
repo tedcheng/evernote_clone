@@ -2,6 +2,11 @@ require 'bcrypt'
 
 class User < ActiveRecord::Base
   attr_accessible :email, :password, :session_token
+  
+  has_many :notes
+  has_many :notebooks
+  has_many :tags
+  has_many :tagggins
 
   def password=(plaintext_password)
     self.password_digest = BCrypt::Password.create(plaintext_password)

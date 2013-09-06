@@ -1,0 +1,90 @@
+<ul class="notebooks list-group">
+  <li class="list-group-item">Notebooks</li>
+  <% if (notebooks) { %>  
+    <% notebooks.each(function(notebook){ %>
+      <% if (!!Evernote.current_notebook.get("title") && notebook.id === Evernote.current_notebook.id) { %>
+        <li class="list-group-item">
+          <span class="notebook <%= notebook.id%> selected %>" data-id="<%= notebook.id%>"><span class="glyphicon glyphicon-book"></span> <%= notebook.get("title") %></span>
+
+          <button type="button" class="pull-right deleteNotebook btn btn-default btn-xs" data-id="<%= notebook.id%>">
+            <span class="glyphicon glyphicon-trash"></span>
+          </button>
+
+        
+          <button type="button" class="pull-right editNotebook btn btn-default btn-xs" data-id="<%= notebook.id%>">
+            <span class="glyphicon glyphicon-pencil"></span>
+          </button>
+        
+        </li>
+      <% } else {%>
+        <li class="list-group-item">
+          <span class="notebook <%= notebook.id%> %>" data-id="<%= notebook.id%>"><span class="glyphicon glyphicon-book"></span> <%= notebook.get("title") %></span>
+
+          <button type="button" class="pull-right deleteNotebook btn btn-default btn-xs" data-id="<%= notebook.id%>">
+            <span class="glyphicon glyphicon-trash"></span>
+          </button>
+        
+          <button type="button" class="pull-right editNotebook btn btn-default btn-xs" data-id="<%= notebook.id%>">
+            <span class="glyphicon glyphicon-pencil"></span>
+          </button>
+        
+        </li>
+      <% }; %>
+    <% }); %>
+  <% } %>
+  
+  <li class="list-group-item">
+    <form class="form-inline add_notebook_form" role="form">
+      <div class="form-group">
+        <input type="text" class="form-control input-sm" name="notebook[title]" placeholder="untitled">
+      </div>
+  
+      <button type="submit" class="addNotebookSubmit pull-right btn btn-default btn-sm">Add New</button>
+    </form>
+  </li>
+
+  
+  <li class="list-group-item">Tags</li>
+
+
+  
+  <% if (tags) { %>  
+    <% tags.each(function(tag){ %>
+      <% if (!!Evernote.current_notebook.get("name") && tag.id === Evernote.current_notebook.id) { %>
+        <li class="list-group-item">
+          <span class="tag <%= tag.id%> selected %>" data-id="<%= tag.id%>"><span class="glyphicon glyphicon-tag"></span> <%= tag.get("name") %></span>
+
+          <button type="button" class="pull-right deleteTag btn btn-default btn-xs" data-id="<%= tag.id%>">
+            <span class="glyphicon glyphicon-trash"></span>
+          </button>
+
+        
+          <button type="button" class="pull-right editTag btn btn-default btn-xs" data-id="<%= tag.id%>">
+            <span class="glyphicon glyphicon-pencil"></span>
+          </button>
+        
+        </li>
+      <% } else {%>
+        <li class="list-group-item">
+          <span class="tag <%= tag.id%> %>" data-id="<%= tag.id%>"><span class="glyphicon glyphicon-tag"></span> <%= tag.get("name") %></span>
+
+          <button type="button" class="pull-right deleteTag btn btn-default btn-xs" data-id="<%= tag.id%>">
+            <span class="glyphicon glyphicon-trash"></span>
+          </button>
+        
+          <button type="button" class="pull-right editTag btn btn-default btn-xs" data-id="<%= tag.id%>">
+            <span class="glyphicon glyphicon-pencil"></span>
+          </button>
+        
+        </li>
+      <% }; %>
+    <% }); %>
+  <% } %>
+  
+
+
+
+
+
+  
+</ul>
