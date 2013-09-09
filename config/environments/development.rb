@@ -34,4 +34,15 @@ Evernote::Application.configure do
 
   # Expands the lines which load the assets
   config.assets.debug = true
+  
+  config.paperclip_defaults = {
+    :storage => :s3,
+    :s3_credentials => {
+      :bucket => evernote-clone-dev,
+      :access_key_id => AKIAJSJA5NHANXULVXKQ,
+      :secret_access_key => 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
+    }
+  }
+  
+  
 end

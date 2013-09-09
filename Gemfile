@@ -28,6 +28,9 @@ gem 'coffee-rails', '~> 3.2.1'
 
 gem 'uglifier', '>= 1.0.3'
 
+gem 'paperclip'
+gem 'aws-sdk'
+
 
 gem 'jquery-rails'
 
