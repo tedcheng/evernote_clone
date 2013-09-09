@@ -13,6 +13,8 @@ gem 'pg'
 gem 'backbone-on-rails'
 gem 'newrelic_rpm'
 
+gem 'kaminari'
+
 gem "anjlab-bootstrap-rails", :require => 'bootstrap-rails',
                               :github => 'anjlab/bootstrap-rails'
                               
