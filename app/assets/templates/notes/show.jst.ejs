@@ -8,7 +8,7 @@
       <input type="text" class="edit_note_content form-control" id="note_title" name="note[title]" value="<%= note.get("title") %>" placeholder="Untitled"%>
       <input type="hidden" name="note[notebook_id]" value="<%= Evernote.current_notebook.id %>">
       <label for="note_body">Body</label>
-      <textarea class="edit_note_content form-control" rows="10" name="note[body]"><%=note.get("body")%></textarea>
+      <div class="edit_note_content body editable form-control" rows="10" name="note[body]" contenteditable="true"><%=note.get("body")%></div>
     </div>
   </form>
 <% } %>

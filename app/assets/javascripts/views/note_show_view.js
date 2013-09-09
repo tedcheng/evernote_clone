@@ -9,7 +9,8 @@ Evernote.Views.NoteShowView = Backbone.View.extend({
     "click a.addTagging": "addTagging",
     "click input.newTagNameInput": "inputTagName",
     "click button.createTag": "createTag",
-    "keyup .edit_note_content": "autoSave"    
+    'mousedown .editable': 'editableClick',
+    "keyup .edit_note_content": "autoSave"
   },
   
   render: function (){
@@ -29,9 +30,11 @@ Evernote.Views.NoteShowView = Backbone.View.extend({
   
   
   autoSave: _.debounce(function(event){
+    
     event.preventDefault();
     var attributes = $(".edit_note_form").serializeJSON().note;
-    var that = this
+    attributes.body = $("div.edit_note_content.body").html();
+    
     Evernote.current_note.save(attributes, {success: function() {
       
       // Evernote.container.render();
@@ -105,7 +108,9 @@ Evernote.Views.NoteShowView = Backbone.View.extend({
         Evernote.container.render();
       }
     });
-  }
+  },
+  
+  editableClick: etch.editableInit
   
   
   

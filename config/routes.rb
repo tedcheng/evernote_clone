@@ -1,4 +1,6 @@
 Evernote::Application.routes.draw do
+  mount Rich::Engine => '/rich', :as => 'rich'
+
   get "tags/index"
 
   get "tags/create"

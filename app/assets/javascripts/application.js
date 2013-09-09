@@ -19,10 +19,10 @@
 //= require jquery_ujs
 //= require underscore
 //= require twitter/bootstrap
-
-
-
 //= require backbone
+//= require etch
+//= require rich
+
 //= require evernote
 //= require_tree ../templates
 //= require_tree ./models
