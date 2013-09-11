@@ -26,7 +26,6 @@ Evernote.Views.NotesIndexView = Backbone.View.extend({
   
   
   render: function (){
-    
     var content = this.template({
       notes: Evernote.current_notes
     });

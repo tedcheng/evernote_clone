@@ -24,8 +24,9 @@ Evernote.Views.ContainerView = Backbone.View.extend({
     this.$el.html(this.template());
 
     this.notebooksIndexView.setElement(this.$('.notebooks')).render();
-    
+        
     this.notesIndexView.setElement(this.$('.notes')).render();
+    
     this.noteShowView.setElement(this.$('.content')).render();
     
     return this;

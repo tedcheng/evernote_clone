@@ -10,13 +10,44 @@ Evernote.Views.NoteShowView = Backbone.View.extend({
     "click input.newTagNameInput": "inputTagName",
     "click button.createTag": "createTag",
     'mousedown .editable': 'editableClick',
-    "keyup .edit_note_content": "autoSave"
+    "keyup .edit_note_content": "autoSave",
+    "change .edit_note_content": "autoSave",
+    "change #file_upload": "handle_files"
   },
   
+  handle_files: function(event){
+    
+    var file = event.currentTarget.files[0]; 
+    var reader = new FileReader(file);
+    var that = this;
+    reader.onload = function(event) {
+      var new_resource = new Evernote.Models.Resource({resource: event.target.result});
+      
+      new_resource.set($('.upload_file_form').serializeJSON());
+      
+      new_resource.save(null, {success: function(resource){
+        var url = resource.get("url");
+        $("div.edit_note_content").append("<img src=" + url + "><br>");
+        that.autoSave();
+      }, error: function(resource){
+        debugger
+      }
+    
+      });
+
+    }
+
+    reader.readAsDataURL(file);
+  },
+  
+  
+  
   render: function (){
+    
     var content = this.template({
       note: Evernote.current_note
     });
+    
     this.$el.html(content);
     
     return this;
@@ -31,7 +62,7 @@ Evernote.Views.NoteShowView = Backbone.View.extend({
   
   autoSave: _.debounce(function(event){
     
-    event.preventDefault();
+    // event.preventDefault();
     var attributes = $(".edit_note_form").serializeJSON().note;
     attributes.body = $("div.edit_note_content.body").html();
     
@@ -112,7 +143,7 @@ Evernote.Views.NoteShowView = Backbone.View.extend({
   
   editableClick: etch.editableInit
   
-  
+
   
   
 });

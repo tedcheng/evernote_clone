@@ -1,15 +1,25 @@
 <% if ( !!note && (!!note.get("tags") || !!note.get("title")) ){ %>
   <div>Notebook: <%= note.notebook_title() %></div>
   <div>Tags: <%= Evernote.container.noteShowView.makeTags({tags: note.get("tags")}) %></div>
-  
+      
   <form class="edit_note_form" role="form">
     <div class="form-group">
       <label for="note_title">Title</label>
       <input type="text" class="edit_note_content form-control" id="note_title" name="note[title]" value="<%= note.get("title") %>" placeholder="Untitled"%>
       <input type="hidden" name="note[notebook_id]" value="<%= Evernote.current_notebook.id %>">
       <label for="note_body">Body</label>
+      
+      
+      <form class="upload_file_form" role="form" enctype="multipart/form-data">
+        <input type="file" id="file_upload" name="resource[resource]" multiple>
+      </form>
+
+
       <div class="edit_note_content body editable form-control" rows="10" name="note[body]" contenteditable="true"><%=note.get("body")%></div>
     </div>
   </form>
+
+  
 <% } %>
+
 

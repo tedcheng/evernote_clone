@@ -4,7 +4,7 @@
   <% notes.each(function(note){ %>
     <% if (note.id === Evernote.current_note.id) { %>
 
-      <li class="list-group-item">
+      <li class="list-group-item draggable">
         <span class="note <%= note.id%> selected %>" data-id="<%= note.id%>"><span class="glyphicon glyphicon-list-alt"></span> <%= note.get("title") %></span>
         <button type="button" class="pull-right deleteNote btn btn-default btn-xs" data-id="<%= note.id%>">
           <span class="glyphicon glyphicon-trash"></span>
@@ -14,7 +14,7 @@
 
     <% } else {%>
 
-      <li class="list-group-item">
+      <li class="list-group-item draggable">
         <span class="note <%= note.id%> %>" data-id="<%= note.id%>"><span class="glyphicon glyphicon-list-alt"></span> <%= note.get("title") %></span>
         <button type="button" class="pull-right deleteNote btn btn-default btn-xs" data-id="<%= note.id%>">
           <span class="glyphicon glyphicon-trash"></span>
@@ -40,3 +40,19 @@
 
 
 </ul>
+
+
+<script>
+$(function() {
+  $( ".draggable" ).draggable({
+  
+  
+    drag: function() {
+      console.log(this); // this is set to the dom element
+    }
+  
+  
+  });
+});
+
+</script>

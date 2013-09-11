@@ -1,4 +1,4 @@
-collection @notebooks, :object_root => false
+collection @notebooks
 attributes :id, :title, :user_id
 
 child :notes, :object_root => false do

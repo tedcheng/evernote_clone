@@ -38,7 +38,6 @@ Evernote.Views.NotebooksIndexView = Backbone.View.extend({
     var tag = Evernote.tags.get(tag_id);
     tag.destroy({
       success: function(){
-        
         Evernote.container.render();
       }
     });

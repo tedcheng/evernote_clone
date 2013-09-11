@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130906234722) do
+ActiveRecord::Schema.define(:version => 20130909215725) do
 
   create_table "notebooks", :force => true do |t|
     t.string   "title"
@@ -27,6 +27,15 @@ ActiveRecord::Schema.define(:version => 20130906234722) do
     t.integer  "user_id"
     t.datetime "created_at",  :null => false
     t.datetime "updated_at",  :null => false
+  end
+
+  create_table "resources", :force => true do |t|
+    t.string   "resource_file_name"
+    t.string   "resource_content_type"
+    t.integer  "resource_file_size"
+    t.datetime "resource_updated_at"
+    t.datetime "created_at",            :null => false
+    t.datetime "updated_at",            :null => false
   end
 
   create_table "rich_rich_files", :force => true do |t|

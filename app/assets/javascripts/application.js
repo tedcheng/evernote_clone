@@ -17,11 +17,13 @@
 //= require jquery
 //= require jquery.serializeJSON.min
 //= require jquery_ujs
+//= require jquery-ui-1.10.3.custom.min
 //= require underscore
 //= require twitter/bootstrap
 //= require backbone
 //= require etch
 //= require rich
+
 
 //= require evernote
 //= require_tree ../templates
