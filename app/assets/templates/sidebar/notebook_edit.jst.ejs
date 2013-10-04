@@ -1,0 +1,7 @@
+<form class="form-inline edit_notebook_form" role="form">
+  <div class="form-group">
+    <input type="text" class="notebook_title form-control input-sm" name="notebook[title]" value="<%= notebook.get("title") %>">
+  </div>
+  
+  <button type="submit" class="edit_notebook_submit pull-right btn btn-default btn-sm" data-id="<%= notebook.id%>">Submit</button>
+</form>

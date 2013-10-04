@@ -1,33 +1,34 @@
 Evernote.Views.ContainerView = Backbone.View.extend({
   initialize: function() {
-    this.notebooksIndexView = new Evernote.Views.NotebooksIndexView();
+    Evernote.selected_notebook_id = Evernote.notebooks.first().id;
+    Evernote.selected_notes = Evernote.notebooks.first().get("notes") || new Evernote.Collections.Notes();
+    Evernote.selected_note = Evernote.selected_notes.first() || new Evernote.Models.Note();
+
+    
+    this.sidebarView = new Evernote.Views.SidebarView();
     this.notesIndexView = new Evernote.Views.NotesIndexView();
-    this.noteShowView = new Evernote.Views.NoteShowView();
-  
     
-    Evernote.current_notebook = Evernote.notebooks.first() || new Evernote.Models.Notebook();
     
-    Evernote.current_notes = Evernote.current_notebook.get("notes") || new Evernote.Collections.Notes();
     
-    Evernote.current_note = Evernote.current_notes.first() || new Evernote.Models.Note();
-  
-    
-    this.listenTo(this.notebooksIndexView, "changeSelection", this.render);
-    this.listenTo(this.notesIndexView, "changeSelection", this.render);
-    this.listenTo(Evernote.current_notes, "addedNewNote", this.render);
-    this.listenTo(this.noteShowView, "noteUpdated", this.render);
+    // this.noteShowView = new Evernote.Views.NoteShowView();
+    //   
+    // 
+
+    //   
+    // this.listenTo(this.sidebarView, "changeSelection", this.render);
+    // this.listenTo(this.notesIndexView, "changeSelection", this.render);
+    // this.listenTo(Evernote.current_notes, "addedNewNote", this.render);
+    // this.listenTo(this.noteShowView, "noteUpdated", this.render);
   },
   
   template: JST['container/container'],
   
   render: function() {
     this.$el.html(this.template());
-
-    this.notebooksIndexView.setElement(this.$('.notebooks')).render();
-        
+    this.sidebarView.setElement(this.$('.sidebar')).render();
     this.notesIndexView.setElement(this.$('.notes')).render();
     
-    this.noteShowView.setElement(this.$('.content')).render();
+    // this.noteShowView.setElement(this.$('.content')).render();
     
     return this;
   }

@@ -1,0 +1,83 @@
+<ul class="notebooks list-group">
+  <li class="list-group-item">Notebooks</li>
+  <% if (notebooks) { %>  
+    <% notebooks.each(function(notebook){ %>
+      
+        <li class="list-group-item droppable" data-id="<%= notebook.id%>">
+          <% if (notebook.id === Evernote.selected_notebook_id) {var selected = "selected"} else {var selected = ""}; %>
+          <span class="notebook <%= notebook.id %> <%= selected %>" data-id="<%= notebook.id %>"><span class="glyphicon glyphicon-book"></span> <%= notebook.get("title") %></span>
+
+          <button type="button" class="pull-right deleteNotebook btn btn-default btn-xs" data-id="<%= notebook.id%>">
+            <span class="glyphicon glyphicon-trash"></span>
+          </button>
+
+        
+          <button type="button" class="pull-right editNotebook btn btn-default btn-xs" data-id="<%= notebook.id%>">
+            <span class="glyphicon glyphicon-pencil"></span>
+          </button>
+        
+        </li>
+    <% }); %>
+  <% } %>
+  
+  <li class="list-group-item">
+    <form class="form-inline add_notebook_form" role="form">
+      <div class="form-group">
+        <input type="text" class="form-control input-sm" name="notebook[title]" placeholder="untitled">
+      </div>
+      <button type="submit" class="addNotebookSubmit pull-right btn btn-default btn-sm">Add New</button>
+    </form>
+  </li>
+</ul>
+
+
+
+
+
+
+
+
+
+
+<script>
+////TODO this part needs to be moved to a js file. Maybe in NotebooksIndexView initialize????
+
+$(function() {
+  $( ".droppable" ).droppable({
+    drop: function() {
+      var notebook_id = parseInt($(this).attr("data-id"));
+      var note_id = parseInt($(event.target).attr("data-id"));
+
+      
+      Evernote.current_notes.remove(Evernote.current_notes.get(note_id));
+      Evernote.container.render();
+  
+      $.ajax({
+        type: "PUT",
+        url: "/notes/" + note_id,
+        data: {note: { notebook_id: notebook_id }},
+        success: function() {
+        
+          Evernote.notebooks.fetch({
+            success: function(){
+              Evernote.container.render();
+            }
+          });
+        }
+      });
+      
+      // update note.notebook_id
+      // fetch new data
+        // Evernote.notebooks -- need to update (to include note move)
+        // Evernote.current_notebook -- need to reselect after updating (to exclude moved note)
+        // Evernote.current_notes -- need to need to be reloaded to exclude moved note
+        
+        // solution: 
+        // remove from Evernote.current_notes
+        // add in Evernote.notebooks.get(notebook_id)
+      
+      // rerender
+    }
+  });
+});
+</script>

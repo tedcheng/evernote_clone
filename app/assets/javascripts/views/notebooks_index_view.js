@@ -1,37 +1,97 @@
-Evernote.Views.NotebooksIndexView = Backbone.View.extend({ 
+Evernote.Views.NotebooksIndexView = Backbone.View.extend({
   
   initialize: function() {
-    // if (Evernote.notebooks.first()){
-    //   Evernote.current_notebook = Evernote.notebooks.first();
-    // } else {
-    //   Evernote.current_notebook = new Evernote.Models.Notebook();
-    // };
+    this.collection = Evernote.notebooks;
     
+    var that = this;
+    var events = ["change", "destroy", "add"];
+    events.forEach(function (event) {
+      that.listenTo(that.collection, event, that.render);
+    });
+        
   },
   
-  template: JST['notebooks/index'],
+  template: JST['sidebar/notebooks'],
+  edit_template: JST['sidebar/notebook_edit'],
   
   events: {
-    "click .notebooks .notebook": "changeNotebook",
-    "click .notebooks .tag": "changeTag",
     "click .notebooks button.deleteNotebook": "deleteNotebook",
     "click .notebooks button.editNotebook": "showEditNotebook",
+    "click button.edit_notebook_submit": "submitEditNotebook",
     "click button.addNotebookSubmit": "addNotebookSubmit",
-    "click button.deleteTag": "deleteTag"
-    
-    
-    
+    "click .notebooks .notebook": "selectNotebook"  
   },
   
   render: function (){
-    var content = this.template({
-      notebooks: Evernote.notebooks,
-      tags: Evernote.tags
-    });
-    this.$el.html(content);
+    this.$el.html(this.template({notebooks: this.collection}));
+    
+    // console.log("rendered");
+    
     return this;
   },
   
+  showEditNotebook: function(event){
+    event.preventDefault();
+    var notebook_id = parseInt($(event.currentTarget).attr("data-id"));
+    var notebook = this.collection.get(notebook_id);
+    $(event.currentTarget.parentElement).html(this.edit_template({notebook: notebook}));
+  },
+
+  submitEditNotebook: function(event){
+    event.preventDefault();
+    var notebook_id = parseInt($(event.currentTarget).attr("data-id"));
+    var notebook = this.collection.get(notebook_id);
+    var notebook_title = $(".edit_notebook_form").serializeJSON().notebook.title;
+    notebook.save("title", notebook_title);
+    
+  },
+  
+  deleteNotebook: function(event){
+    event.preventDefault();
+    var notebook_id = parseInt($(event.currentTarget).attr("data-id"));
+    var notebook = Evernote.notebooks.get(notebook_id);
+    notebook.destroy();
+  },  
+  
+  addNotebookSubmit: function(event){
+    event.preventDefault();
+    var new_notebook = new Evernote.Models.Notebook($(".add_notebook_form").serializeJSON().notebook);
+    
+    Evernote.notebooks.create(new_notebook);
+  },
+  
+  selectNotebook: function(event){
+    $("span.notebook").removeClass("selected");
+    $(event.currentTarget).addClass("selected");
+    
+    Evernote.selected_notebook_id = parseInt($(event.currentTarget).attr("data-id"));
+    var selected_notebook = this.collection.get(Evernote.selected_notebook_id);
+    Evernote.selected_notes.reset(selected_notebook.get("notes"));
+
+    
+    
+    if (Evernote.selected_notes) {
+      Evernote.selected_note.set(Evernote.selected_notes.first());
+    } else {
+      Evernote.selected_note.set(new Evernote.Models.Notebook());
+    };
+    
+
+  },
+  
+
+  
+
+  
+
+  
+
+
+
+
+
+
+  //TODO: this needs to be moved to tags_index_view.js
   deleteTag: function(event){
     event.preventDefault();
     var tag_id = parseInt($(event.currentTarget).attr("data-id"));
@@ -41,21 +101,6 @@ Evernote.Views.NotebooksIndexView = Backbone.View.extend({
         Evernote.container.render();
       }
     });
-  },
-  
-  
-  changeNotebook: function(event){
-    
-    var notebook_id = parseInt($(event.currentTarget).attr("data-id"));
-    Evernote.current_notebook = Evernote.notebooks.get(notebook_id);
-    Evernote.current_notes = Evernote.current_notebook.get("notes");
-    if (Evernote.current_notes) {
-      Evernote.current_note = Evernote.current_notes.first();
-    } else {
-      Evernote.current_note = new Evernote.Models.Notebook();
-    };
-
-    this.trigger("changeSelection");
   },
   
   changeTag: function(event){    
@@ -73,37 +118,9 @@ Evernote.Views.NotebooksIndexView = Backbone.View.extend({
         Evernote.container.render();        
       }
     });
-  },
-  
-  deleteNotebook: function(event){
-    event.preventDefault();
-    var notebook_id = parseInt($(event.currentTarget).attr("data-id"));
-    var notebook = Evernote.notebooks.get(notebook_id);
-    notebook.destroy({
-      success: function(){
-        Evernote.container.render();
-      }
-    });
-    
-  },
-  
-  showEditNotebook: function(event){
-    event.preventDefault();
-    var notebook_id = parseInt($(event.currentTarget).attr("data-id"));
-    var notebook = Evernote.notebooks.get(notebook_id);
-    
-    var editNotebookView = new Evernote.Views.EditNotebookView({model: notebook});
-    $(event.currentTarget.parentElement).html(editNotebookView.render().$el);
-  },
-  
-  addNotebookSubmit: function(event){
-    event.preventDefault();
-    var new_notebook = new Evernote.Models.Notebook($(".add_notebook_form").serializeJSON().notebook);
-    
-    Evernote.notebooks.create(new_notebook, {success: function() {
-      Evernote.current_notebook = new_notebook;
-      Evernote.container.render();
-    }});
   }
+  
+  
+  
   
 });
