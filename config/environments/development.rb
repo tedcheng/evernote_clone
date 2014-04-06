@@ -39,9 +39,9 @@ Evernote::Application.configure do
     :storage => :s3,
     :s3_credentials => {
       :bucket => 'evernote-clone-dev',
-      :access_key_id => 'AKIAJSJA5NHANXULVXKQ',
-      :secret_access_key => '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',
-      :s3_host_name => 's3-us-west-1.amazonaws.com'
+      :access_key_id => '',
+      :secret_access_key => '',
+      :s3_host_name => ''
     }
   }
   
